@@ -1,66 +1,74 @@
 import { useState } from 'react';
+import { aiService } from '../services/aiService';
+import { useAuth } from '../contexts/AuthContext';
 
 export const useAI = () => {
   const [isProcessing, setIsProcessing] = useState(false);
+  const { user, profile } = useAuth();
 
-  // Simulate AI categorization
-  const categorizeExpense = async (description, amount) => {
+  // Enhanced AI categorization with real OpenAI integration
+  const categorizeExpense = async (description, amount, merchant = '') => {
     setIsProcessing(true);
-    
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    const categories = {
-      'coffee': 'Food & Dining',
-      'starbucks': 'Food & Dining',
-      'restaurant': 'Food & Dining',
-      'uber': 'Transportation',
-      'gas': 'Transportation',
-      'netflix': 'Entertainment',
-      'spotify': 'Entertainment',
-      'grocery': 'Groceries',
-      'amazon': 'Shopping',
-      'target': 'Shopping',
-      'gym': 'Health & Fitness',
-      'pharmacy': 'Healthcare'
-    };
-    
-    const lowerDesc = description.toLowerCase();
-    for (const [keyword, category] of Object.entries(categories)) {
-      if (lowerDesc.includes(keyword)) {
-        setIsProcessing(false);
-        return category;
-      }
+    try {
+      const category = await aiService.categorizeExpense(description, amount, merchant);
+      return category;
+    } catch (error) {
+      console.error('Error categorizing expense:', error);
+      return 'Other';
+    } finally {
+      setIsProcessing(false);
     }
-    
-    setIsProcessing(false);
-    return 'Other';
   };
 
-  // Simulate anomaly detection
-  const detectAnomaly = async (amount, description) => {
+  // Enhanced anomaly detection with user history
+  const detectAnomaly = async (amount, description, userSpendingHistory = []) => {
     setIsProcessing(true);
-    
-    // Simulate AI analysis
-    await new Promise(resolve => setTimeout(resolve, 600));
-    
-    // Simple rules-based anomaly detection
-    const isLargeAmount = Math.abs(amount) > 200;
-    const isUnusualMerchant = description.toLowerCase().includes('unknown') || 
-                             description.toLowerCase().includes('pending');
-    
-    setIsProcessing(false);
-    return isLargeAmount || isUnusualMerchant;
+    try {
+      const result = await aiService.detectAnomaly(amount, description, userSpendingHistory);
+      return result.isAnomaly;
+    } catch (error) {
+      console.error('Error detecting anomaly:', error);
+      return false;
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
-  // Generate savings recommendations
+  // Generate comprehensive savings recommendations
+  const generateSavingsRecommendations = async (transactions, budgets) => {
+    setIsProcessing(true);
+    try {
+      const recommendations = await aiService.generateSavingsRecommendations(
+        transactions, 
+        budgets, 
+        profile
+      );
+      return recommendations;
+    } catch (error) {
+      console.error('Error generating savings recommendations:', error);
+      return [];
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  // Generate spending insights
+  const generateSpendingInsights = async (transactions, timeframe = 'month') => {
+    setIsProcessing(true);
+    try {
+      const insights = await aiService.generateSpendingInsights(transactions, timeframe);
+      return insights;
+    } catch (error) {
+      console.error('Error generating spending insights:', error);
+      return null;
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  // Legacy method for backward compatibility
   const generateSavingsRecommendation = async (category) => {
-    setIsProcessing(true);
-    
-    // Simulate AI recommendation generation
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const recommendations = {
+    const mockRecommendations = {
       'dining_out': {
         category: 'Dining Out',
         recommendation: 'Cook at home 2 more days per week and use meal planning apps.',
@@ -81,8 +89,7 @@ export const useAI = () => {
       }
     };
     
-    setIsProcessing(false);
-    return recommendations[category] || {
+    return mockRecommendations[category] || {
       category: 'General',
       recommendation: 'Track your spending more closely and set specific budget limits.',
       potentialSavings: 25,
@@ -93,7 +100,9 @@ export const useAI = () => {
   return {
     categorizeExpense,
     detectAnomaly,
-    generateSavingsRecommendation,
+    generateSavingsRecommendation, // Legacy
+    generateSavingsRecommendations, // New enhanced version
+    generateSpendingInsights,
     isProcessing
   };
 };
