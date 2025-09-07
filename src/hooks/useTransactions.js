@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { aiService } from '../services/aiService';
@@ -11,7 +11,7 @@ export const useTransactions = () => {
   const { user } = useAuth();
 
   // Fetch transactions from database
-  const fetchTransactions = async (filters = {}) => {
+  const fetchTransactions = useCallback(async (filters = {}) => {
     if (!user) return;
 
     try {
@@ -72,7 +72,7 @@ export const useTransactions = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   // Add new transaction
   const addTransaction = async (transactionData) => {
@@ -325,7 +325,7 @@ export const useTransactions = () => {
     if (user) {
       fetchTransactions();
     }
-  }, [user]);
+  }, [user, fetchTransactions]);
 
   return {
     transactions,

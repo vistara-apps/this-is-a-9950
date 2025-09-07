@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Search, Filter, CreditCard, AlertTriangle } from 'lucide-react';
+import { Plus, Search, CreditCard, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 
 const Transactions = ({ transactions, onAddTransaction }) => {

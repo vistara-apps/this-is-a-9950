@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, Brain, Bell, Search } from 'lucide-react';
 
-const Header = ({ currentView, onViewChange, mobileMenuOpen, onToggleMobileMenu, navigationItems }) => {
+const Header = ({ currentView, onViewChange, onToggleMobileMenu, navigationItems }) => {
   const getCurrentViewTitle = () => {
     const view = navigationItems.find(item => item.id === currentView);
     return view ? view.label : 'Dashboard';

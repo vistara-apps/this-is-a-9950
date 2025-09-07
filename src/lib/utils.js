@@ -131,7 +131,7 @@ export function deepClone(obj) {
   if (typeof obj === 'object') {
     const clonedObj = {};
     for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
         clonedObj[key] = deepClone(obj[key]);
       }
     }
@@ -185,22 +185,24 @@ export function getDateRange(period) {
         start: startOfToday,
         end: new Date(startOfToday.getTime() + 24 * 60 * 60 * 1000 - 1)
       };
-    case 'week':
+    case 'week': {
       const startOfWeek = new Date(startOfToday);
       startOfWeek.setDate(startOfToday.getDate() - startOfToday.getDay());
       return {
         start: startOfWeek,
         end: new Date(startOfWeek.getTime() + 7 * 24 * 60 * 60 * 1000 - 1)
       };
+    }
     case 'month':
       return {
         start: new Date(now.getFullYear(), now.getMonth(), 1),
         end: new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999)
       };
-    case 'quarter':
+    case 'quarter': {
       const quarterStart = new Date(now.getFullYear(), Math.floor(now.getMonth() / 3) * 3, 1);
       const quarterEnd = new Date(quarterStart.getFullYear(), quarterStart.getMonth() + 3, 0, 23, 59, 59, 999);
       return { start: quarterStart, end: quarterEnd };
+    }
     case 'year':
       return {
         start: new Date(now.getFullYear(), 0, 1),

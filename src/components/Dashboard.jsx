@@ -1,9 +1,9 @@
 import React from 'react';
-import { TrendingUp, TrendingDown, CreditCard, Target, DollarSign, AlertTriangle } from 'lucide-react';
-import { LineChart, Line, AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { TrendingUp, TrendingDown, CreditCard, Target, AlertTriangle } from 'lucide-react';
+import { AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isWithinInterval } from 'date-fns';
 
-const Dashboard = ({ transactions, budgets, savingsGoals }) => {
+const Dashboard = ({ transactions, budgets }) => {
   // Calculate key metrics
   const currentMonth = new Date();
   const monthStart = startOfMonth(currentMonth);

@@ -237,7 +237,7 @@ const Budget = ({ budgets, transactions, onUpdateBudget }) => {
               {percentage > 90 && (
                 <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
                   <p className="text-sm text-red-700">
-                    ⚠️ You're close to exceeding your budget for this category.
+                    ⚠️ You&apos;re close to exceeding your budget for this category.
                   </p>
                 </div>
               )}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { CreditCard, TrendingUp, Target, Brain, Menu, X, Home, Wallet, BarChart3, Settings } from 'lucide-react';
+import { CreditCard, Target, Brain, X, Home } from 'lucide-react';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import Transactions from './components/Transactions';
@@ -110,7 +110,7 @@ const AppLayout = () => {
   const [currentView, setCurrentView] = useState('dashboard');
   const [transactions, setTransactions] = useState(mockData.transactions);
   const [budgets, setBudgets] = useState(mockData.budgets);
-  const [savingsGoals, setSavingsGoals] = useState(mockData.savingsGoals);
+  const [savingsGoals] = useState(mockData.savingsGoals);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const { categorizeExpense, detectAnomaly, generateSavingsRecommendation } = useAI();

@@ -263,7 +263,7 @@ class AIService {
   }
 
   // Mock methods for fallback when OpenAI is not available
-  mockCategorizeExpense(description, amount) {
+  mockCategorizeExpense(description) {
     const categories = {
       'coffee': 'Food & Dining',
       'starbucks': 'Food & Dining',
@@ -305,7 +305,7 @@ class AIService {
     };
   }
 
-  mockGenerateSavingsRecommendations(transactions) {
+  mockGenerateSavingsRecommendations() {
     return [
       {
         category: 'Food & Dining',
@@ -334,7 +334,7 @@ class AIService {
     ];
   }
 
-  mockGenerateSpendingInsights(transactions) {
+  mockGenerateSpendingInsights() {
     return {
       summary: 'Your spending has been relatively consistent this month with some opportunities for optimization.',
       trends: [

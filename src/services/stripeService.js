@@ -16,12 +16,12 @@ class StripeService {
   }
 
   // Create checkout session for subscription
-  async createCheckoutSession(userId, priceId, successUrl, cancelUrl) {
+  async createCheckoutSession(userId, priceId) {
     try {
       // In production, this would be a backend API call to create a Stripe checkout session
       // For demo purposes, we'll simulate the process
       
-      const { data: user, error } = await supabase
+      const { error } = await supabase
         .from('users')
         .select('*')
         .eq('id', userId)
@@ -330,22 +330,22 @@ class StripeService {
     }
   }
 
-  async handleSubscriptionUpdate(subscription) {
+  async handleSubscriptionUpdate() {
     // Update user subscription status in database
     // This would be implemented on the backend
   }
 
-  async handleSubscriptionCancellation(subscription) {
+  async handleSubscriptionCancellation() {
     // Handle subscription cancellation
     // This would be implemented on the backend
   }
 
-  async handlePaymentSuccess(invoice) {
+  async handlePaymentSuccess() {
     // Handle successful payment
     // This would be implemented on the backend
   }
 
-  async handlePaymentFailure(invoice) {
+  async handlePaymentFailure() {
     // Handle failed payment
     // This would be implemented on the backend
   }

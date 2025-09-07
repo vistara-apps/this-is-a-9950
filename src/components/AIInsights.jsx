@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Brain, TrendingUp, AlertTriangle, Lightbulb, RefreshCw } from 'lucide-react';
 
 const AIInsights = ({ transactions, budgets, generateSavingsRecommendation }) => {
@@ -6,7 +6,7 @@ const AIInsights = ({ transactions, budgets, generateSavingsRecommendation }) =>
   const [loading, setLoading] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
 
-  const generateInsights = async () => {
+  const generateInsights = useCallback(async () => {
     setLoading(true);
     try {
       // Simulate AI analysis
@@ -57,11 +57,11 @@ const AIInsights = ({ transactions, budgets, generateSavingsRecommendation }) =>
     } finally {
       setLoading(false);
     }
-  };
+  }, [generateSavingsRecommendation]);
 
   useEffect(() => {
     generateInsights();
-  }, [transactions, budgets]);
+  }, [transactions, budgets, generateInsights]);
 
   const getImpactColor = (impact) => {
     switch (impact) {

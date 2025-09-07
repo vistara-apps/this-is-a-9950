@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 export const useAI = () => {
   const [isProcessing, setIsProcessing] = useState(false);
-  const { user, profile } = useAuth();
+  const { profile } = useAuth();
 
   // Enhanced AI categorization with real OpenAI integration
   const categorizeExpense = async (description, amount, merchant = '') => {

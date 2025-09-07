@@ -45,7 +45,7 @@ class PlaidService {
       
       // Store account information
       for (const account of metadata.accounts) {
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('accounts')
           .insert({
             user_id: userId,
